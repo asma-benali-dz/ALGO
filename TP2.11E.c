@@ -5,12 +5,12 @@
 char *ChargerChaine(int N) {
     char *chaine = (char *)malloc((N + 1) * sizeof(char)); 
     if (!chaine) { 
-        printf("Erreur d'allocation de mémoire.\n");
+        printf("Erreur d'allocation de mÃ©moire.\n");
         exit(1);
     }
     printf("Veuillez saisir la chaine:\n");
     fgets(chaine, N + 1, stdin); 
-    chaine[strcspn(chaine, "\n")] = '\0'; // ????? ????? ??????
+    chaine[strcspn(chaine, "\n")] = '\0'; 
     return chaine;
 }
 
@@ -26,7 +26,7 @@ void InverserTab(char *Tab, char *T, int m) {
     for (int i = 0; i < m; i++) {
         T[i] = Tab[m - i - 1];
     }
-    T[m] = '\0'; // ????? ??????? ???????
+    T[m] = '\0'; 
 }
 
 void AfficherTab(char *Tab) {
@@ -37,7 +37,7 @@ int main() {
     int n;
     printf("Veuillez saisir la taille maximale de la chaine:\n");
     scanf("%d", &n);
-    getchar(); // ????? ?????? ??????
+    getchar(); 
     
     char *ch = ChargerChaine(n);
     int m = Longueur(ch);
@@ -45,8 +45,8 @@ int main() {
     char *Tab = (char *)malloc((m + 1) * sizeof(char)); 
     char *T = (char *)malloc((m + 1) * sizeof(char)); 
     
-    if (!Tab || !T) { // ???? ?? ???? ???????
-        printf("Erreur d'allocation de mémoire.\n");
+    if (!Tab || !T) { 
+        printf("Erreur d'allocation de mÃ©moire.\n");
         free(ch);
         exit(1);
     }
@@ -56,7 +56,7 @@ int main() {
     AfficherTab(Tab);
 
     InverserTab(Tab, T, m);
-    printf("La chaine inversée:\n");
+    printf("La chaine inversÃ©e:\n");
     AfficherTab(T);
 
     free(ch);
