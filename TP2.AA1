@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// fonction pour lire une chaine de texte de lutilisaateur
+char *ChargerChaine(int N) {
+    char *chaine = (char *)malloc(N + 1); // allocation de mèmoire
+    if (!chaine) {
+        printf("Erreur d'allocation de mémoire.\n");
+        exit(1);
+    }
+
+    printf("Veuillez saisir la chaîne (max %d caractères):\n", N);
+    int i = 0;
+    char c;
+    while ((c = getchar()) != '\n' && i < N) {
+        chaine[i++] = c;
+    }
+    chaine[i] = '\0'; // Ajouter la dernière lettre
+
+    return chaine;
+}
+
+// fonction pour calculer la longueur d'une chaine
+int Longueur(char *ch) {
+    int len = 0;
+    while (*ch != '\0') {
+        len++;
+        ch++;
+    }
+    return len;
+}
+
+// fonction pour copier une chaine dans un tableau
+void ChargerTab(char *src, char *dest) {
+    int i = 0;
+    while (src[i] != '\0') {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+}
+
+// fonction pour inverser la chaine 
+void InverserTab(char *Tab, char *T, int m) {
+    int i = 0, j = m - 1;
+    while (i < j) {
+        char temp = Tab[i];
+        Tab[i] = Tab[j];
+        Tab[j] = temp;
+        i++;
+        j--;
+    }
+}
+
+// fonction pour imprimer une chaine 
+void AfficherTab(char *Tab) {
+    int i = 0;
+    while (Tab[i] != '\0') {
+        putchar(Tab[i]);
+        i++;
+    }
+    putchar('\n');
+}
+
+int main() {
+    int n;
+    printf("Veuillez saisir la taille maximale de la chaîne:\n");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        printf("Taille invalide.\n");
+        return 1;
+    }
+    getchar(); // consommer le personnage de transport'\n'
+
+    // lire la chaine de l'utilisateur 
+    char *chaine = ChargerChaine(n);
+
+    // calculer la longueur de la  chaine 
+    int longueur = Longueur(chaine);
+
+    // Allouer de la mèmoire pour deux nouvelles chaines 
+    char *copie = (char *)malloc(longueur + 1);
+    char *inverse = (char *)malloc(longueur + 1);
+
+    // copiez la chaine dans un tableau
+    ChargerTab(chaine, copie);
+
+    // voir la sèrie originale 
+    printf("La chaîne originale:\n");
+    AfficherTab(copie);
+
+    // Inverser la chaine 
+    InverserTab(copie, inverse, longueur);
+
+    // Afficher la chaine inversèe 
+    printf("La chaîne inversée:\n");
+    AfficherTab(inverse);
+
+    // Modifier la mèmoire
+    free(chaine);
+    free(copie);
+    free(inverse);
+
+    return 0;
+}
