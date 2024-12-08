@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Dèfinition de la structure èlèment de la liste chainee
+typedef struct element {
+    int val;
+    struct element *suivant;
+} element;
+
+// Fonction pour crèer une liste vide
+element* creerListe() {
+    return NULL;
+}
+// Fonction pour charger une liste a partir d'un tableau d'entiers
+void chargerListe(int tab[], int taille, element* liste) {
+    element* nouveau_element = NULL;
+    for (int i = 0; i < taille; i++) {
+        nouveau_element = (element*) malloc(sizeof(element));
+        nouveau_element->val = tab[i];
+        nouveau_element->suivant = liste;
+        liste = nouveau_element;
+    }
+    return liste;
+}
+// Fonction pour afficher les èlèments d'une liste 
+void afficherListe(element* liste) {
+    element* temp = liste;
+    while (temp!= NULL) {
+        printf("%d ", temp->val);
+        temp = temp->suivant;
+    }
+    printf("\n");
+}
+// Fonction pour supprimer l'èlèment en fin de liste 
+element* supprimerEnFin(element* liste) {
+    element* temp = liste;
+    while (temp->suivant!= NULL) {
+        temp = temp->suivant;
+    }
+    element* dernier_element = temp;
+    element* nouveau_element = (element*) malloc(sizeof(element));
+    nouveau_element->val = dernier_element->val;
+    nouveau_element->suivant = NULL;
+    temp->suivant = nouveau_element;
+    return temp;
+}
+// Fonction pour ajouter un èlèment au dèbut de la liste
+element* ajouterEnDebut(element* liste, int valeur) {
+    element* nouveau_element = (element*) malloc(sizeof(element));
+    nouveau_element->val = valeur;
+    nouveau_element->suivant = liste;
+    liste = nouveau_element;
+    return liste;
+}
+// Fonction pour vider une liste
+void viderListe(element* liste) {
+    element* temp = liste;
+    while (temp!= NULL) {
+        element* temp2 = temp->suivant;
+        free(temp);
+        temp = temp2;
+    }
+    printf("la liste est vide\n");
+}
+
+int main() {
+    int tab[10] = {1, 3, 5, 7, 8, 10, 9, 11, 13, 20};
+    element* liste = creerListe();
+    liste = chargerListe(tab, 10, liste);
+    afficherListe(liste);
+    element* L1 = supprimerEnFin(liste);
+    afficherListe(L1);
+    element* L2 = ajouterEnDebut(L1, 40);
+    afficherListe(L2);
+    viderListe(L2);
+    return 0;
+}
