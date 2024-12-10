@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 100
+
+typedef struct {
+    char nom[20];
+    char prenom[20];
+    int note;
+} Etudiant;
+
+void ajouterEtudiant(Etudiant tab[], int *n) {
+    if (*n >= MAX) {
+        printf("La liste est pleine.\n");
+        return;
+    }
+    printf("Entrez le nom: ");
+    scanf("%s", tab[*n].nom);
+    printf("Entrez le prenom: ");
+    scanf("%s", tab[*n].prenom);
+    printf("Entrez la note: ");
+    scanf("%d", &tab[*n].note);
+    (*n)++;
+}
+
+void supprimerEtudiant(Etudiant tab[], int *n, int index) {
+    if (index < 0 || index >= *n) {
+        printf("Index invalide.\n");
+        return;
+    }
+    for (int i = index; i < *n - 1; i++) {
+        tab[i] = tab[i + 1];
+    }
+    (*n)--;
+}
+
+void afficherEtudiants(Etudiant tab[], int n) {
+    printf("Liste des etudiants:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Nom: %s, Prenom: %s, Note: %d\n", tab[i].nom, tab[i].prenom, tab[i].note);
+    }
+}
+
+int main() {
+    Etudiant tab[MAX];
+    int n = 0;
+    int choix;
+    do {
+        printf("1. Ajouter un etudiant\n");
+        printf("2. Supprimer un etudiant\n");
+        printf("3. Afficher les etudiants\n");
+        printf("4. Quitter\n");
+        printf("Votre choix: ");
+        scanf("%d", &choix);
+        switch (choix) {
+            case 1:
+                ajouterEtudiant(tab, &n);
+                break;
+            case 2:
+                int index;
+                printf("Entrez l'index de l'etudiant a supprimer: ");
+                scanf("%d", &index);
+                supprimerEtudiant(tab, &n, index);
+                break;
+            case 3:
+                afficherEtudiants(tab, n);
+                break;
+        }
+    } while (choix != 4);
+    return 0;
+}
